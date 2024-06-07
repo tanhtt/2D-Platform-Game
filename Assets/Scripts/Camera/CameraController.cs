@@ -183,8 +183,10 @@ public class CameraController : MonoBehaviour
                 break;
             case CameraStyles.DistanceFollow:
                 result = transform.position;
+                // Vector3.magnitude return the length of vector (is square root of (x*x+y*y+z*z))
                 if ((targetPosition - result).magnitude > maxDistanceFromTarget)
                 {
+                    // (result - targetPosition).normalized to find target, use normalized to avoid 
                     result = targetPosition + (result - targetPosition).normalized * maxDistanceFromTarget;
                 }
                 break;
@@ -192,8 +194,15 @@ public class CameraController : MonoBehaviour
                 result = targetPosition + (Vector3)cameraOffset;
                 break;
             case CameraStyles.BetweenTargetAndMouse:
+                /* Lerp is calculating a point in a middle between two points depends on mouseTracking (from 0 to 1)
+                 * if mouseTracking = 0, desiredPos equals targetPos
+                 * if mouseTracking = 1, desiredPos equals mousePos
+                 * if 0 < mouseTracking < 1, desiredPos place somewhere between targetPos and mousePos
+                 */
                 Vector3 desiredPosition = Vector3.Lerp(targetPosition, mousePosition, mouseTracking);
+                // Distance and direction from targetPos to desiredPos
                 Vector3 difference = desiredPosition - targetPosition;
+                // Limit the distance
                 difference = Vector3.ClampMagnitude(difference, maxDistanceFromTarget);
                 result = targetPosition + difference;
                 break;
