@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
     public static InputManager instance;
 
     /// <summary>
-    /// Description:
+    /// Description:                                  
     /// Standard Unity Function called when the script is loaded
     /// Input:
     /// none
